@@ -27,11 +27,21 @@
                 <td><img src="{{asset($image)}}" width="120px" height="60px" ></td>
                 <td>{{$post->title}}</td>
                 
-                   @if (!$post->trashed())
+                   @if ($post->trashed())
                  <td>
-                 <a href="{{route('posts.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
-                   @endif
+                 <form action="{{route('restore-posts',$post->id)}}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <button type="submit" class="btn btn-info btn-sm">Restore</button>  
+               </form>
+               
                 </td>
+
+                @else
+                  <td>
+                     <a href="{{route('posts.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+                  </td>
+                @endif
                 <td>
                 <form action="{{route('posts.destroy',$post->id)}}" method="POST">
                   @csrf
