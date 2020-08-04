@@ -10,28 +10,34 @@
        </div>
 
        <div class="card-body">
-          <table class="table">
-          <thead>
-             <tr>
-             <th>Name</th>
-             <th></th>
-            </tr>
-          </thead>
-          <tbody>
-             @foreach ($categories as $category)
-                 <tr>
-                    <td>
-                       {{$category->name}}
-                    </td>
-                    <td>
-                    <a href="{{route('categories.edit',$category->id)}}" class="btn btn-info btn-sm ">Edit</a>
-                    <a  class="btn btn-danger btn-sm" onclick="handleDelete({{$category->id}})">Delete</a>
-
-                    </td>
-                 </tr>
-             @endforeach
-          </tbody>
-         </table>
+         @if ($categories->count()>0)
+         <table class="table">
+            <thead>
+               <tr>
+               <th>Name</th>
+               <th></th>
+              </tr>
+            </thead>
+            <tbody>
+               @foreach ($categories as $category)
+                   <tr>
+                      <td>
+                         {{$category->name}}
+                      </td>
+                      <td>
+                      <a href="{{route('categories.edit',$category->id)}}" class="btn btn-info btn-sm ">Edit</a>
+                      <a  class="btn btn-danger btn-sm" onclick="handleDelete({{$category->id}})">Delete</a>
+  
+                      </td>
+                   </tr>
+               @endforeach
+            </tbody>
+           </table>
+             
+         @else
+         <h3 class="text-center">No Category Yet</h3>
+             
+         @endif
 
          
 <!-- Modal -->
@@ -50,7 +56,7 @@
          </button>
        </div>
        <div class="modal-body">
-         <p class="text-center">Are you sure you want to delete post</p>
+         <p class="text-center">Are you sure you want to delete Category</p>
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">No,Go back</button>

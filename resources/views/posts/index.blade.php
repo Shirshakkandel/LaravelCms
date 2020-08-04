@@ -9,11 +9,54 @@
    </div>
 
    <div class="card-body">
-      <table class="table">
+    @if ($posts->count()>0)
+     <table class="table">
       <thead>
          <tr>
-         <th>Name</th>
+         <th>Image</th>
+         <th>Title</th>
+         <th></th>
          <th></th>
         </tr>
+        <tr>
+
+         <tbody>
+            @foreach ($posts as $post)
+                <tr>
+                   <?php $image="storage/$post->image" ?>
+                <td><img src="{{asset($image)}}" width="120px" height="60px" ></td>
+                <td>{{$post->title}}</td>
+                
+                   @if (!$post->trashed())
+                 <td>
+                 <a href="{{route('posts.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+                   @endif
+                </td>
+                <td>
+                <form action="{{route('posts.destroy',$post->id)}}" method="POST">
+                  @csrf
+                  @method("DELETE")
+                  <button type="submit" class="btn btn-danger btn-sm">
+                     {{$post->trashed()?'Delete' :"Trash"}}
+                  </button>
+               </form>
+                </td>
+
+                  
+                </tr>
+
+                
+            @endforeach
+            
+         
+         </tbody>
+
+        </tr>
       </thead>
+        
+    @else
+
+      <h3 class="text-center">No Posts Yet </h3>
+        
+    @endif
 @endsection
