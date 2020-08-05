@@ -13,6 +13,7 @@ class CategoriesController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
     public function index()
     {
@@ -24,6 +25,7 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         return view('Categories.create');
@@ -97,4 +99,5 @@ class CategoriesController extends Controller
         session()->flash('success',"category deleted succesfully");
          return redirect(route('categories.index'));
     }
+
 }
