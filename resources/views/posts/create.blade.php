@@ -50,6 +50,7 @@
                  @foreach ($categories as $category)
                <option value="{{$category->id}}"
                   @if (isset($post))
+
                       @if($category->id === $post->category_id)
                         selected
                       @endif
@@ -62,6 +63,26 @@
                </select>
          </div>
 
+         @if ($tags->count()>0)
+          <div class="form-group ">
+             <label for="tags">Tags</label>
+             <select name="tags[]" id="tags" class="form-control tagselect" multiple>
+               @foreach ($tags as $tag)
+                   <option value="{{$tag->id}}"
+                     @if (isset($post))
+                        @if ($post->hasTag($tag->id))
+                        selected
+                        @endif
+                     @endif
+                     >
+                     {{$tag->name}}
+                  </option>
+               @endforeach
+             </select>
+          </div>
+             
+         @endif
+          
          <div class="form-group">
             <label for="Image">Image</label>
             <input type="file" class="form-control" name="image">
@@ -81,10 +102,16 @@
     @section('script')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix-core.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
          <script>
             flatpickr("#published_at", {
                enableTime:true
-            })
+            });
+
+            // In your Javascript (external .js resource or <script> tag)
+               $(document).ready(function() {
+                  $('.tagselect').select2();
+               });
 
          </script>
 
@@ -93,5 +120,7 @@
     @section('css')
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
     @endsection
 @endsection
