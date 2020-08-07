@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Category;
+use App\User;
 use Closure;
 
-class VerifyCategoriesCount
+
+class VerifyIsAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,9 +17,9 @@ class VerifyCategoriesCount
      */
     public function handle($request, Closure $next)
     {
-        if(Category::all()->count() == 0){
-            session()->flash('error','You need to add category to create a post');
-            return redirect(route('categories.create'));
+        if(!auth()->user()->isAdmin()){
+        
+            return redirect("/home");
         }
         return $next($request);
     }
