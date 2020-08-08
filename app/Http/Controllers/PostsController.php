@@ -23,6 +23,8 @@ class PostsController extends Controller
      {
          $this->middleware('verifyCategoriesCount')->only(['create','store']);    
      }
+
+
     public function index()
     {
         return view('posts.index')->with('posts',Post::all());
